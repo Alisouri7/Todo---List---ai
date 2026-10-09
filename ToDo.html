@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A professional Todo List application with real-time clock" />
+    <meta name="keywords" content="todo, task manager, productivity, javascript" />
+    <meta name="author" content="SabzLearn" />
+    <title>Todo List Pro | Professional Task Manager</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="css/styleToDo.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+
+      <!-- ===== HEADER ===== -->
+      <header class="app-header">
+        <div class="header-content">
+
+          <!-- Logo & Title -->
+          <div class="logo-section">
+            <i class="fas fa-check-circle logo-icon"></i>
+            <h1 class="app-title" id="appTitle">Todo List Pro</h1>
+            <p class="app-subtitle" id="appSubtitle">Professional Task Management</p>
+          </div>
+
+          <!-- Clock & Controls -->
+          <div class="clock-section">
+            <div class="clock-container">
+              <div class="clock-display">
+                <div class="time-unit">
+                  <span id="hour" class="time-value">00</span>
+                  <span id="hourLabel" class="time-label">Hours</span>
+                </div>
+                <span class="time-separator">:</span>
+                <div class="time-unit">
+                  <span id="minute" class="time-value">00</span>
+                  <span id="minuteLabel" class="time-label">Minutes</span>
+                </div>
+                <span class="time-separator">:</span>
+                <div class="time-unit">
+                  <span id="seconds" class="time-value">00</span>
+                  <span id="secondLabel" class="time-label">Seconds</span>
+                </div>
+              </div>
+              <div class="current-date">
+                <i class="far fa-calendar-alt date-icon"></i>
+                <span id="currentDate">--/--/----</span>
+              </div>
+              <div class="header-actions">
+                <button
+                  id="themeToggle"
+                  class="theme-toggle-btn"
+                  aria-label="Switch to dark mode"
+                  title="Toggle theme"
+                >
+                  <i class="fas fa-moon theme-icon" aria-hidden="true"></i>
+                </button>
+                <button
+                  id="languageToggle"
+                  class="language-toggle-btn"
+                  aria-label="Switch to Persian"
+                  title="Switch to Persian"
+                >
+                  <i class="fas fa-globe theme-icon" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </header>
+      <!-- /HEADER -->
+
+      <!-- ===== MAIN ===== -->
+      <main class="app-main">
+
+        <!-- Add Task Section -->
+        <section class="input-section card">
+          <div class="card-body">
+            <h2 class="section-title">
+              <i class="fas fa-plus-circle"></i> Add New Task
+            </h2>
+            <div class="input-group-lg">
+
+              <!-- Task input -->
+              <div class="input-with-icon">
+                <i class="fas fa-tasks input-icon"></i>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="itemInput"
+                  placeholder="Enter a new task..."
+                  aria-label="Task input"
+                  autocomplete="off"
+                />
+              </div>
+
+              <!-- Priority selector -->
+              <div class="priority-selector" role="radiogroup" aria-label="Task priority">
+                <button type="button" class="priority-btn priority-high" data-priority="high" title="High Priority">
+                  <i class="fas fa-flag"></i> High
+                </button>
+                <button type="button" class="priority-btn priority-medium active" data-priority="medium" title="Medium Priority">
+                  <i class="fas fa-flag"></i> Medium
+                </button>
+                <button type="button" class="priority-btn priority-low" data-priority="low" title="Low Priority">
+                  <i class="fas fa-flag"></i> Low
+                </button>
+              </div>
+
+              <!-- Tag & Due date -->
+              <div class="input-meta-row">
+                <div class="meta-input-group">
+                  <i class="fas fa-tag"></i>
+                  <input
+                    type="text"
+                    class="form-control meta-input"
+                    id="tagInput"
+                    placeholder="Tag (e.g. work, personal)"
+                    aria-label="Task tag"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="meta-input-group">
+                  <label for="calendarTypeInput" class="visually-hidden">Calendar Type</label>
+                  <i class="fas fa-calendar-alt"></i>
+                  <select class="form-control meta-input" id="calendarTypeInput" aria-label="Calendar type">
+                    <option value="gregorian">Gregorian</option>
+                    <option value="jalali">Jalali (شمسی)</option>
+                  </select>
+                </div>
+                <div class="meta-input-group" id="dueDateInputGroup">
+                  <i class="fas fa-calendar-day"></i>
+                  <input
+                    type="text"
+                    class="form-control meta-input"
+                    id="dueDateInput"
+                    placeholder="Select date"
+                    aria-label="Due date"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="input-actions">
+                <button id="addButton" class="btn btn-primary btn-lg">
+                  <i class="fas fa-plus"></i> Add Task
+                </button>
+                <button id="clearButton" class="btn btn-outline-danger btn-lg">
+                  <i class="fas fa-trash-alt"></i> Clear All
+                </button>
+              </div>
+
+              <!-- Timer toggle -->
+              <div class="timer-toggle-row">
+                <label class="timer-toggle-label">
+                  <input type="checkbox" id="timerEnabled" aria-label="Enable countdown timer" />
+                  <i class="fas fa-stopwatch"></i>
+                  <span id="timerToggleText">Set a timer for this task</span>
+                </label>
+              </div>
+              <div class="timer-input-row" id="timerInputRow" aria-hidden="true">
+                <div class="timer-input-group">
+                  <input
+                    type="number"
+                    id="timerValue"
+                    class="form-control timer-value-input"
+                    min="1"
+                    max="9999"
+                    placeholder="e.g. 30"
+                    aria-label="Timer duration"
+                  />
+                  <select id="timerUnit" class="form-control timer-unit-select" aria-label="Timer unit">
+                    <option value="seconds">Seconds</option>
+                    <option value="minutes" selected>Minutes</option>
+                    <option value="hours">Hours</option>
+                  </select>
+                </div>
+                <p class="timer-hint" id="timerHint">
+                  <i class="fas fa-info-circle"></i> Task will auto-complete when time runs out
+                </p>
+              </div>
+
+              <div class="input-hint">
+                <i class="fas fa-lightbulb"></i> Press Enter to quickly add tasks
+              </div>
+
+            </div>
+          </div>
+        </section>
+        <!-- /Add Task Section -->
+
+        <!-- Tasks Section -->
+        <section class="tasks-section card">
+          <div class="card-body">
+
+            <!-- Section header + filter buttons -->
+            <div class="section-header">
+              <h2 class="section-title">
+                <i class="fas fa-list-check"></i> Your Tasks
+                <span class="badge bg-primary" id="taskCount">0</span>
+              </h2>
+              <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+              </div>
+            </div>
+
+            <!-- Search & filter bar -->
+            <div class="search-filter-bar">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  class="form-control search-input"
+                  id="searchInput"
+                  placeholder="Search tasks..."
+                  aria-label="Search tasks"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="filter-dropdowns">
+                <select id="priorityFilter" class="form-control filter-select" aria-label="Filter by priority">
+                  <option value="all">All Priorities</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
+                <select id="dateFilter" class="form-control filter-select" aria-label="Filter by date">
+                  <option value="all">All Dates</option>
+                  <option value="today">Today</option>
+                  <option value="week">This Week</option>
+                  <option value="overdue">Overdue</option>
+                  <option value="no-date">No Date</option>
+                </select>
+                <select id="tagFilter" class="form-control filter-select" aria-label="Filter by tag">
+                  <option value="all">All Tags</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Task list -->
+            <div class="tasks-container">
+              <div id="emptyMessage" class="empty-state">
+                <i class="far fa-clipboard empty-icon"></i>
+                <h3>No tasks yet</h3>
+                <p>Start by adding your first task above!</p>
+              </div>
+              <ul id="todoList" class="tasks-list">
+                <!-- Tasks inserted by JS -->
+              </ul>
+            </div>
+
+            <!-- Stats -->
+            <div class="tasks-stats">
+              <div class="stat-item">
+                <span class="stat-label" data-stat="total">Total:</span>
+                <span class="stat-value" id="totalTasks">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label" data-stat="active">Active:</span>
+                <span class="stat-value" id="activeTasks">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label" data-stat="completed">Completed:</span>
+                <span class="stat-value" id="completedTasks">0</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+        <!-- /Tasks Section -->
+
+      </main>
+      <!-- /MAIN -->
+
+      <!-- ===== FOOTER ===== -->
+      <footer class="app-footer">
+        <div class="footer-content">
+          <p class="footer-text">
+            <i class="fas fa-code"></i> Built with <span class="heart">♥</span> using HTML, CSS &amp; JavaScript
+          </p>
+          <p class="footer-copyright">
+            &copy; <span id="currentYear">2024</span> Todo List Pro | v1.0.0
+          </p>
+        </div>
+      </footer>
+      <!-- /FOOTER -->
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+  </body>
+</html>
